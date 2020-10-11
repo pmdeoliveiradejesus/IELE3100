@@ -1,0 +1,79 @@
+// Author Paulo M. De Oliveira pm.deoliveiradejes@uniandes.edu.co March 15, 2018
+! Kersting NEV Test system
+! n=1 SHORT-CIRCUIT ANALYSIS
+! Full NEV approach (considering tower footings)
+clear
+New circuit.SOURCE_1    bus1=n1.1  bus2=n1.4 basekV=66.39528 pu=1 angle=0  Z1=[.000000200, 8.73333]   phase=1
+New Vsource.SOURCE_2 bus1=n1.2  bus2=n1.4 basekV=66.39528 pu=1 angle=-120 Z1=[.000000200, 8.73333]   phase=1
+New Vsource.SOURCE_3 bus1=n1.3 bus2=n1.4 basekV=66.39528 pu=1 angle=120 Z1=[.000000200, 8.73333]  phase=1
+set earthmodel=carson  
+! **** DEFINE WIRE DATA line 115
+new wiredata.conductor Runits=mi Rac=0.306 GMRunits=ft GMRac=0.0244  
+new wiredata.neutral   Runits=mi Rac=7.71 GMRunits=ft GMRac=0.000183 
+! **** DEFINE LINE GEOMETRY line 115
+new linegeometry.4wire nconds=4 nphases=3 reduce=no 
+~ cond=1 wire=conductor units=ft x=-6   h=44.21 
+~ cond=2 wire=conductor units=ft x=+6  h=40 
+~ cond=3 wire=conductor units=ft x=+6    h=48.17 
+~ cond=4 wire=neutral     units=ft x=0.75    h=57.91 
+! ****115 KV LINE!
+new line.line11 geometry=4wire length=4.7 units=mi bus1=n1.1.2.3.4 bus2=n2.1.2.3.4 Rho=265
+new line.line12 geometry=4wire length=4.7 units=mi bus1=n2.1.2.3.4 bus2=n3.1.2.3.4 Rho=265
+new line.line13 geometry=4wire length=4.7 units=mi bus1=n3.1.2.3.4 bus2=n4.1.2.3.4 Rho=265
+new line.line14 geometry=4wire length=4.7 units=mi bus1=n4.1.2.3.4 bus2=n5.1.2.3.4 Rho=265
+new line.line15 geometry=4wire length=4.7 units=mi bus1=n5.1.2.3.4 bus2=n6.1.2.3.4 Rho=265
+!Transformer
+new transformer.t1 xhl=10
+~ wdg=1 bus=n6.1.2.3.4 conn=delta kV=115 kVA=20000 %r=0.0 
+~ wdg=2 bus=n7.1.2.3.4 conn=wye kV=12  kVA=20000 %r=0.0
+! **** DEFINE WIRE DATA 12kv line
+new wiredata.conductor2 Runits=mi Rac=1.12 GMRunits=ft GMRac=0.00446  
+new wiredata.neutral2   Runits=mi Rac=1.65 GMRunits=ft GMRac=0.00504 
+! **** DEFINE LINE GEOMETRY 12kv line
+new linegeometry.4wire2 nconds=4 nphases=3 reduce=no 
+~ cond=1 wire=conductor units=ft x=0   h=38.41 
+~ cond=2 wire=conductor units=ft x=-3.5  h=36.25 
+~ cond=3 wire=conductor units=ft x=+3.5    h=36.25 
+~ cond=4 wire=neutral     units=ft x=0.    h=31.75 
+! ****12 KV LINE!
+new line.line21  geometry=4wire length=1 units=mi bus1=n7.1.2.3.4 bus2=n8.1.2.3.4 Rho=265
+new line.line22  geometry=4wire length=1 units=mi bus1=n8.1.2.3.4 bus2=n9.1.2.3.4 Rho=265
+new line.line23  geometry=4wire length=1 units=mi bus1=n9.1.2.3.4 bus2=n10.1.2.3.4 Rho=265
+new line.line24  geometry=4wire length=1 units=mi bus1=n10.1.2.3.4 bus2=n11.1.2.3.4 Rho=265
+new line.line25  geometry=4wire length=1 units=mi bus1=n11.1.2.3.4 bus2=n12.1.2.3.4 Rho=265
+new line.line26  geometry=4wire length=1 units=mi bus1=n12.1.2.3.4 bus2=n13.1.2.3.4 Rho=265
+new line.line27  geometry=4wire length=1 units=mi bus1=n13.1.2.3.4 bus2=n14.1.2.3.4 Rho=265
+new line.line28  geometry=4wire length=1 units=mi bus1=n14.1.2.3.4 bus2=n15.1.2.3.4 Rho=265
+new line.line29  geometry=4wire length=1 units=mi bus1=n15.1.2.3.4 bus2=n16.1.2.3.4 Rho=265
+new line.line210 geometry=4wire length=1 units=mi bus1=n16.1.2.3.4 bus2=n17.1.2.3.4 Rho=265
+!Loads
+!New Load.load1a.1 Phases=1  Bus1=n17.1.4   kVA=00 pf=0.9  kV=12 conn=wye  vminpu=0.1 vmaxpu=1.9
+!New Load.load1b.2 Phases=1  Bus1=n17.2.4   kVA=00 pf=0.95   kV=12  conn=wye  vminpu=0.1 vmaxpu=1.9
+!New Load.load1c.3 Phases=1  Bus1=n17.3.4   kVA=00 pf=0.85  kV=12 conn=wye vminpu=0.1 vmaxpu=1.9
+New Reactor.1Ground Phases=1 Bus1=n1.4 Bus2=n1.0 R=02.0000 X=0
+New Reactor.2Ground Phases=1 Bus1=n2.4 Bus2=n2.0 R=30.0000 X=0
+New Reactor.3Ground Phases=1 Bus1=n3.4 Bus2=n3.0 R=30.0000 X=0
+New Reactor.4Ground Phases=1 Bus1=n4.4 Bus2=n4.0 R=30.0000 X=0
+New Reactor.5Ground Phases=1 Bus1=n5.4 Bus2=n5.0 R=30.0000 X=0
+New Reactor.6Ground Phases=1 Bus1=n6.4 Bus2=n6.0 R=02.0000 X=0
+New Reactor.7Ground Phases=1 Bus1=n7.4 Bus2=n6.4 R=00.0000000001 X=0
+New Reactor.8Ground Phases=1 Bus1=n8.4 Bus2=n8.0 R=50.0000 X=0
+New Reactor.9Ground Phases=1 Bus1=n9.4 Bus2=n9.0 R=50.0000 X=0
+New Reactor.10Ground Phases=1 Bus1=n10.4 Bus2=n10.0 R=50.0000 X=0
+New Reactor.11Ground Phases=1 Bus1=n11.4 Bus2=n11.0 R=50.0000 X=0
+New Reactor.12Ground Phases=1 Bus1=n12.4 Bus2=n12.0 R=50.0000 X=0
+New Reactor.13Ground Phases=1 Bus1=n13.4 Bus2=n13.0 R=50.0000 X=0
+New Reactor.14Ground Phases=1 Bus1=n14.4 Bus2=n14.0 R=50.0000 X=0
+New Reactor.15Ground Phases=1 Bus1=n15.4 Bus2=n15.0 R=50.0000 X=0
+New Reactor.16Ground Phases=1 Bus1=n16.4 Bus2=n16.0 R=50.0000 X=0
+New Reactor.17Ground Phases=1 Bus1=n17.4 Bus2=n17.0 R=50.0000 X=0
+set voltagebases=[115 12] 
+calcvoltagebases     ! **** let DSS compute voltage bases
+New Fault.faseA   Phases=1  Bus1=n6.1  Bus2=n6.4
+!New Fault.faseB   Phases=1  Bus1=n2.2  Bus2=n2.4
+!New Fault.faseC   Phases=1  Bus1=n2.3  Bus2=n2.4
+solve ! Various reports ...
+show voltages LN Nodes 
+show currents resid=yes elements  
+
+
