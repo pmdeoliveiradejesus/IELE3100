@@ -183,7 +183,7 @@ zpn=complex(3*re,xpne)*span12;
 % Chain impedance calculation
 zs=zne;
 zpar=3*Rgpole12;
-zinf=zs/2+sqrt(zs^2/4+zs*zpar);
+zinf=(zs/2+sqrt(zs^2/4+zs*zpar))/8;
 % Sequence zero current calculation
 Vo=vbaseh*1000/sqrt(3);
 zequiv=zinf*3*Rmat/(zinf+3*Rmat);
@@ -202,7 +202,7 @@ I0ieee=Vo/(2*(z1+zpos115)+z0+zzero115kron);
 %Endrenyi:
 Zeql=.5*(zges)+sqrt(Rtower115*zges);
 Zeqf=.5*(znes)+sqrt(Rgpole12*znes);
-zeq=Zeql*Zeqf/(Zeql+Zeqf);
+zeq=(Zeql*Zeqf/(Zeql+Zeqf))/8;
 Sfieee=abs(zeq/(zeq+Rmat)) %the reduction factor
 Ifieee=3*abs(I0ieee);%Fault current A
 Ig=Ifieee*Sfieee;
