@@ -19,14 +19,14 @@ new linegeometry.4wire nconds=4 nphases=3 reduce=no
 ! **** 12.47 KV LINE!
 new line.line1 geometry=4wire length=6000 units=ft bus1=n1.1.2.3.4 bus2=n2.1.2.3.4 Rho=100
  !Loads
-!New Load.load1a.1 Phases=1  Bus1=n2.1.4   kVA=3000 pf=0.9  kV=12.47 conn=wye  vminpu=0.1 vmaxpu=1.9
-!New Load.load1b.2 Phases=1  Bus1=n2.2.4   kVA=3500 pf=0.95   kV=12.47  conn=wye  vminpu=0.1 vmaxpu=1.9
-!New Load.load1c.3 Phases=1  Bus1=n2.3.4   kVA=2500 pf=0.85  kV=12.47 conn=wye vminpu=0.1 vmaxpu=1.9
+New Load.load1a.1 Phases=1  Bus1=n2.1.4   kVA=3000 pf=0.9  kV=12.47 conn=wye  vminpu=0.1 vmaxpu=1.9
+New Load.load1b.2 Phases=1  Bus1=n2.2.4   kVA=3500 pf=0.95   kV=12.47  conn=wye  vminpu=0.1 vmaxpu=1.9
+New Load.load1c.3 Phases=1  Bus1=n2.3.4   kVA=2500 pf=0.85  kV=12.47 conn=wye vminpu=0.1 vmaxpu=1.9
 New Reactor.SourceGround Phases=1 Bus1=n1.4 Bus2=n1.0 R=.5 X=0
 New Reactor.Load1Ground Phases=1 Bus1=n2.4 Bus2=n2.0 R=5 X=0
 set voltagebases=[12.47] 
 calcvoltagebases     ! **** let DSS compute voltage bases
-New Fault.faseA   Phases=1  Bus1=n2.1  Bus2=n2.4 R=.000001
+!New Fault.faseA   Phases=1  Bus1=n2.1  Bus2=n2.4 R=.000001
 !New Fault.faseB   Phases=1  Bus1=n2.2  Bus2=n2.4 R=.000001
 !New Fault.faseC   Phases=1  Bus1=n2.3  Bus2=n2.4 R=.000001
 solve
@@ -34,6 +34,6 @@ solve
 ! Various reports ...
 show voltages LN Nodes 
 !show currents resid=yes elements  ! this shows sum of phase currents
-!Show Powers kva Elements
+Show Powers kva Elements
 !show Y
 !show Yprimshow Y

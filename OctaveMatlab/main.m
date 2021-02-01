@@ -19,16 +19,16 @@ global YbusO
 [zabc,zabcn,yshabc,yshabcn,z012,ysh012] = networkk(db); %Network model
 [S,Sabc,yl,ylabc,ylabcn] = demand(db); % Load demand model 
 % Power flow analysis
-%[V1,I1,losses(1),iter1]=zimplicit_1(zg012,z012,S)%The z-implicit power flow
-%[V2,I2,losses(2),iter2]=OpenDSS_1(zg012,z012,S,yl,ysh012);%OpenDSS Engine
-%[V3,I3,losses(3),iter3]=Newton_1(zg012,z012,S,ysh012);%Newton method
-%[V4,I4,losses(4),iter4]=NewtonRaphson_1(zg012,z012,S,ysh012);%Newton-Rhapson
-%[V5,I5,losses(5),iter5]=zimplicit_3(zgabc,zabc,Sabc);
-%[V6,I6,losses(6),iter6]=Newton_3(zgabc,zabc,Sabc,yshabc);
-% [V7,I7,losses(7),iter7]=OpenDSS_3(zgabc,zabc,Sabc,ylabc,yshabc)
-% [V8,I8,losses(8),iter8]=OpenDSS_4(ygabcn,zabcn,Sabc,ylabcn,yshabcn);
-% [V9,I9,losses(9),iter9]=OpenDSS_4_fsolve(ygabcn,zabcn,Sabc,ylabcn,yshabcn);
- [V10,I10,losses(10),iter10]=OpenDSS_COM_4(Sabc,zgabc,yshabcn);
+[V1,I1,losses(1),iter1]=zimplicit_1(zg012,z012,S)%The z-implicit power flow
+[V2,I2,losses(2),iter2]=OpenDSS_1(zg012,z012,S,yl,ysh012)%OpenDSS Engine
+[V3,I3,losses(3),iter3]=Newton_1(zg012,z012,S,ysh012)%Newton method
+[V4,I4,losses(4),iter4]=NewtonRaphson_1(zg012,z012,S,ysh012) %Newton-Rhapson
+[V5,I5,losses(5),iter5]=zimplicit_3(zgabc,zabc,Sabc)% z-implicit three phase
+[V6,I6,losses(6),iter6]=Newton_3(zgabc,zabc,Sabc,yshabc)  % Newton 3-phase
+[V7,I7,losses(7),iter7]=OpenDSS_3(zgabc,zabc,Sabc,ylabc,yshabc)  % OpenDSS 3phase
+[V8,I8,losses(8),iter8]=OpenDSS_4(ygabcn,zabcn,Sabc,ylabcn,yshabcn)  %OpenDSS 4wire BackForward Sweep);
+[V9,I9,losses(9),iter9]=OpenDSS_4_fsolve(ygabcn,zabcn,Sabc,ylabcn,yshabcn) %OpenDSS 4wire Newton );
+[V10,I10,losses(10),iter10]=OpenDSS_COM_4(Sabc,zgabc,yshabcn);
 %%%losses.';
 %% Short circuit analysis
 %[Icc3,Icc1]=shortcircuit(z012,zg012);%Short-circuit 1ph 3ph (sequence nets)
