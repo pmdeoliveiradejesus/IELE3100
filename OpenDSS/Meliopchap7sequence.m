@@ -101,10 +101,6 @@ a=-0.5+j*sqrt(3)*.5;
 As=[1 1 1;1 a^2 a; 1 a a^2];
 z0123=inv(As)*zabc3*As;
 z0124=inv(As)*zabc4*As;
-zsec=inv(As)*diag([z0 z1 z1])*As;
-
-
-
 %positive/negative seq impedance entire 115kV line
 zpos115=z0123(2,2)*L115;
 % Other ways to compute z+ in 115kV
@@ -183,7 +179,7 @@ zpn=complex(3*re,xpne)*span12;
 % Chain impedance calculation
 zs=zne;
 zpar=3*Rgpole12;
-zinf=(zs/2+sqrt(zs^2/4+zs*zpar))/8;
+zinf=zs/2+sqrt(zs^2/4+zs*zpar);
 % Sequence zero current calculation
 Vo=vbaseh*1000/sqrt(3);
 zequiv=zinf*3*Rmat/(zinf+3*Rmat);
@@ -202,7 +198,7 @@ I0ieee=Vo/(2*(z1+zpos115)+z0+zzero115kron);
 %Endrenyi:
 Zeql=.5*(zges)+sqrt(Rtower115*zges);
 Zeqf=.5*(znes)+sqrt(Rgpole12*znes);
-zeq=(Zeql*Zeqf/(Zeql+Zeqf))/8;
+zeq=Zeql*Zeqf/(Zeql+Zeqf);
 Sfieee=abs(zeq/(zeq+Rmat)) %the reduction factor
 Ifieee=3*abs(I0ieee);%Fault current A
 Ig=Ifieee*Sfieee;
@@ -212,15 +208,3 @@ zth(1,1)=z0;
 zth(2,2)=z1;
 zth(3,3)=z1;
 zthp=As*zth*inv(As);
-
-% Exact solution according to OpenDSS
-Ifault=complex(442.2,-1427.2);
-Ineutral=complex(-171.65,329.48);
-Ichain=complex(38.324,-275.52);
-Iearth=complex(232.07,-822.31); 
-Ifault+Ineutral-Ichain-Iearth; % Current distribution
-Sfopendss=abs(Iearth/Ifault)*100 %reduction factor
-GPRopenDSS=abs(Iearth)*Rmat %GPR in volts
-
-
-
